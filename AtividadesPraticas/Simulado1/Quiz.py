@@ -10,12 +10,21 @@ class Quiz:
         print("=" * 50)
         print(f"\nOlá, {self.nome}! O quiz possui {len(perguntas)} questões.")
         input("Pressione ENTER para começar...\n")
- 
+    
     def perguntar(self, pergunta, numero):
-        print(f"[{numero}/{len(perguntas)}] {pergunta['enunciado']}\n")
-        for alternativa in pergunta["alternativas"]:
-            print(f"  {alternativa}")
-        return input("\nSua resposta: ").strip().upper()
+        alternativas_validas = [alt[0] for alt in pergunta["alternativas"]]
+ 
+        while True:
+            print(f"[{numero}/{len(perguntas)}] {pergunta['enunciado']}\n")
+            for alternativa in pergunta["alternativas"]:
+                print(f"  {alternativa}")
+ 
+            resposta = input("\nSua resposta: ").strip().upper()
+ 
+            if resposta in alternativas_validas:
+                return resposta
+            else:
+                print(f"\n Resposta inválida! Digite uma das letras: {', '.join(alternativas_validas)}\n")
  
     def responder(self, resposta_aluno, resposta_correta):
         if resposta_aluno == resposta_correta:
